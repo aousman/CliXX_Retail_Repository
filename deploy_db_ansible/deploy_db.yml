@@ -4,9 +4,9 @@
     connection: local
     become: ec2-user
     vars:
-      instance_id: wordpressdbclixxjenkins
-      db_snapshot: wordpressdbclixxsnap
-      security_group: sg-096dfd014aed072e6
+      instance_id: wordpressdbclixx
+      db_snapshot: wordpressdbclixxjenkins
+      security_group: sg-0dbbe912f7d35c926
     tasks:
        - name: Restore DB from snapshot
          local_action:
