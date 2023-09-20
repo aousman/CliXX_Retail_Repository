@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages {
-        /* 
+        /*
         stage('Sonarcube Scan') {
             steps {
                 script {
@@ -113,7 +113,6 @@ pipeline {
                     string(credentialsId: 'ECR_USERNAME', variable: 'ECR_USERNAME'),
                     string(credentialsId: 'ECR_REPO', variable: 'ECR_REPO')
                 ]) {
-]) {
                     sh '''
                         aws ecr get-login-password --region us-east-1 | docker login --username ${ECR_USERNAME} --password-stdin ${ECR_REPO}
                         docker tag clixx-image:$VERSION ${ECR_REPO}:clixx-image-$VERSION
@@ -127,13 +126,12 @@ pipeline {
     }
 }
 
+def getSonarPath() {
+    def SonarHome = tool name: 'sonarqube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+    return SonarHome
+}
 
-def getSonarPath(){
-        def SonarHome= tool name: 'sonarqube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-        return SonarHome
-    }
-def getDockerPath(){
-        def DockerHome= tool name: 'docker-inst', type: 'dockerTool'
-        return DockerHome
-    }
-   
+def getDockerPath() {
+    def DockerHome = tool name: 'docker-inst', type: 'dockerTool'
+    return DockerHome
+}
