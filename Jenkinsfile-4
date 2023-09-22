@@ -50,7 +50,7 @@ pipeline {
                 '''
             }
         }
-        
+        /*
         stage('Restore CliXX Database') {
             steps {
                 sh '''
@@ -85,7 +85,7 @@ pipeline {
                 }
             }
         }
-        
+        */
         stage('Tear Down CliXX Docker Image and Database') {
             steps {
                 script {
@@ -124,9 +124,64 @@ pipeline {
                 }
             }
         }
+
+         stage('Replicate Image to Dev ECR') { remove dev account sha
+            steps {
+                withCredentials([
+                    string(credentialsId: 'DEV_USERNAME', variable: 'DEV_USERNAME'),
+                    string(credentialsId: 'DEV_REPO', variable: 'DEV_REPO')])
+                {
+                sh '''
+                    aws ecr get-login-password --region us-east-1 | docker login --username ${DEV_USERNAME} --password-stdin ${DEV_REPO}
+                    docker tag clixx-image:${VERSION} ${DEV_REPO}:clixx-image-${VERSION}
+                    docker tag clixx-image:${VERSION} ${DEV_REPO}:latest
+                    docker push ${DEV_REPO}:clixx-image-${VERSION}
+                    docker push ${DEV_REPO}:latest
+                '''
+                }
+            }
+            }
     }
 }
 
+
+
+you need to create your image repo in both accounts and add this to the permission 
+
+Actions
+ecr:BatchCheckLayerAvailability
+ecr:BatchGetImage
+ecr:CompleteLayerUpload
+ecr:GetDownloadUrlForLayer
+ecr:InitiateLayerUpload
+ecr:PutImage
+ecr:UploadLayerPart
+
+
+
+
+comment out sonarqube scan, restore db, configue db, synthetic check
+
+leave tear down clixx but comment out ansible
+
+change the endpoint to the endpoint to the endpoint of that is available in dev dev 
+
+add this stage to your jenkins file 
+         stage('Replicate Image to Dev ECR') {
+            steps {
+                withCredentials([string(credentialsId: 'DEV_USERNAME', variable: 'DEV_USERNAME'),
+                                string(credentialsId: 'DEV_REPO', variable: 'DEV_REPO')])
+                {
+                sh '''
+                    aws ecr get-login-password --region us-east-1 | docker login --username ${DEV_USERNAME} --password-stdin ${DEV_REPO}
+                    docker tag clixx-image:${VERSION} ${DEV_REPO}:clixx-image-${VERSION}
+                    docker tag clixx-image:${VERSION} ${DEV_REPO}:latest
+                    docker push ${DEV_REPO}:clixx-image-${VERSION}
+                    docker push ${DEV_REPO}:latest
+                '''
+                }
+            }
+            } 
 
 
 
