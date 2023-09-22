@@ -124,12 +124,12 @@ pipeline {
                 }
             }
         }
-    }
-}
+        
          stage('Replicate Image to Dev ECR') {
             steps {
-                withCredentials([string(credentialsId: 'DEV_USERNAME', variable: 'DEV_USERNAME'),
-                                string(credentialsId: 'DEV_REPO', variable: 'DEV_REPO')])
+                withCredentials([
+                    string(credentialsId: 'DEV_USERNAME', variable: 'DEV_USERNAME'),
+                    string(credentialsId: 'DEV_REPO', variable: 'DEV_REPO')])
                 {
                 sh '''
                     aws ecr get-login-password --region us-east-1 | docker login --username ${DEV_USERNAME} --password-stdin ${DEV_REPO}
@@ -141,6 +141,8 @@ pipeline {
                 }
             }
             }
+    }
+}
 
 
 
