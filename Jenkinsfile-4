@@ -96,7 +96,7 @@ pipeline {
                     source python3-virtualenv/bin/activate
                     python3 --version
                     pip3 install boto3 botocore boto
-                    ansible-playbook $WORKSPACE/deploy_db_ansible/delete_db.yml 
+                    ansible-playbook $WORKSPACE/deploy_db_ansible/delete_db.yml ##REMOVED THIS PART FROM JENKINS FILE 3
                     deactivate
                     docker stop clixx-cont
                     docker rm clixx-cont
