@@ -144,13 +144,12 @@ pipeline {
                 }
             }
         } 
-
+  */
 
 
     }
 }
-   */
-
+   
 
 
 def getSonarPath() {
