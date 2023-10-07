@@ -29,10 +29,10 @@ define( 'DB_USER', 'wordpressuser' );
 define( 'DB_PASSWORD', 'W3lcome123' );
 
 /** MySQL hostname */
-define( 'DB_HOST', 'wordpressdbclixxdockerimage.ca61b97bps9d.us-east-1.rds.amazonaws.com' );
+define( 'DB_HOST', 'wordpressdbclixxdockerimage.cy6yfvbq2xkh.us-east-1.rds.amazonaws.com' );
 
 /** Database Charset to use in creating database tables. */
-define( 'DB_CHARSET', 'utf8' );
+define( 'DB_CHARSET', 'utf8' ); 
 
 /** The Database Collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
